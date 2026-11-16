@@ -393,8 +393,9 @@ import { createScene } from './scene.js';
 
   /* ---------- the scene (3D, see scene.js) ---------- */
   const canvas = $('scene');
-  const S = { open: 0, target: 0, heat: 0, heatTarget: 0, recoil: 0, auto: false, t: 0 };
-  const P = { x: 0, y: 0, active: false, down: false };
+  const S = { open: 0, target: 0, heat: 0, heatTarget: 0, recoil: 0, listen: 0, auto: false, t: 0 };
+  const P = { x: 0, y: 0, active: false, down: false, drag: 0 };
+  let downAt = 0, downX = 0, downY = 0, moved = 0;
   let scene3d = null;
   try { scene3d = createScene(canvas, reduced); } catch (err) { console.warn('3D scene unavailable', err); canvas.style.display = 'none'; }
   const fit = () => { if (scene3d) scene3d.resize(); };
@@ -410,6 +411,8 @@ import { createScene } from './scene.js';
     S.open += (S.target - S.open) * (reduced ? 1 : Math.min(1, dt * 5));
     S.heat += (S.heatTarget - S.heat) * (reduced ? 1 : Math.min(1, dt * 2.2));
     S.recoil *= Math.exp(-dt * 2.2);
+    S.listen *= Math.exp(-dt * 1.4);
+    if (!P.down) P.drag *= Math.exp(-dt * 2.5);
     if (unlocked) {
       resolveTo((S.open - 0.06) / 0.86);
       if (!announcedOpen && S.open > 0.93) { announcedOpen = true; say('status', 's_open'); $('after').hidden = true; }
@@ -423,13 +426,23 @@ import { createScene } from './scene.js';
     P.x = ((e.clientX - r.left) / r.width) * 2 - 1;
     P.y = -(((e.clientY - r.top) / r.height) * 2 - 1);
   };
-  canvas.addEventListener('pointermove', e => { toLocal(e); P.active = true; });
+  canvas.addEventListener('pointermove', e => {
+    const ox = P.x, oy = P.y; toLocal(e); P.active = true;
+    if (P.down) { moved += Math.hypot(P.x - ox, P.y - oy); P.drag = clamp(P.drag + (P.x - ox) * 0.9, -0.95, 0.95); }
+  });
   canvas.addEventListener('pointerdown', e => {
     toLocal(e); P.active = true; P.down = true;
+    downAt = performance.now(); downX = P.x; downY = P.y; moved = 0;
     try { canvas.setPointerCapture(e.pointerId); } catch (_) {}
-    if (!unlocked) say('status', 's_flinch');
   });
-  const release = e => { P.down = false; if (e.pointerType !== 'mouse') P.active = false; };
+  const release = e => {
+    const quick = P.down && performance.now() - downAt < 280 && moved < 0.05;
+    P.down = false;
+    let hit = null;
+    if (quick && scene3d) hit = scene3d.tap(downX, downY, unlocked);
+    if (!unlocked && !hit && quick) say('status', 's_flinch');
+    if (e.pointerType !== 'mouse') P.active = false;
+  };
   canvas.addEventListener('pointerup', release);
   canvas.addEventListener('pointercancel', release);
   canvas.addEventListener('pointerleave', () => { P.active = false; P.down = false; });
@@ -476,6 +489,7 @@ import { createScene } from './scene.js';
     busy = false;
   });
   $('auto-open').addEventListener('click', () => { S.auto = true; });
+  $('answer').addEventListener('input', () => { S.listen = 1; });
 
   $('plant-form').addEventListener('submit', e => {
     e.preventDefault();
