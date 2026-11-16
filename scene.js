@@ -1,5 +1,5 @@
-// The 3D scene. Xenia herself is a sculpted model (assets/xenia.glb), finished in Blender:
-// reduced for the web, turned to face the viewer, and given blink shapes for both eyes.
+// The 3D scene. Xenia herself is a sculpted model (assets/xenia.glb), prepared in Blender:
+// lightened for the web and turned to face the viewer, otherwise untouched.
 // The flowers around her are ten sculpted species (assets/flora.glb), split apart in Blender;
 // they close and open through a small vertex shader. Loose petals and specks are made in code.
 import * as THREE from 'three';
@@ -21,12 +21,8 @@ function rng(seed) {
   };
 }
 
-// Measured on the model, in its own units (the bust is about 1 unit tall).
+// The bust is about 1 unit tall in its own units.
 const MODEL_SCALE = 3.3;
-const NECK_PIVOT = new THREE.Vector3(0.0, 0.31, 0.03);
-const EYE_R = new THREE.Vector3(-0.115, 0.575, 0.283);
-const EYE_L = new THREE.Vector3(0.1, 0.594, 0.28);
-const FACE = new THREE.Vector3(-0.01, 0.6, 0.25);
 
 /* ---------- loose petals ---------- */
 const PETAL = { w: 0.56, cup: 0.42, curl: 0.9, tip: 0.5, ruffle: 0.02 };
@@ -49,67 +45,31 @@ export function createScene(canvas, reduced) {
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'high-performance' });
   renderer.setClearColor(0x000000, 0);
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-  renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 0.5;
+  renderer.toneMapping = THREE.NeutralToneMapping;
+  renderer.toneMappingExposure = 1.0;
   const scene = new THREE.Scene();
   scene.environment = new THREE.PMREMGenerator(renderer).fromScene(new RoomEnvironment(), 0.04).texture;
-  scene.environmentIntensity = 0.55;
+  scene.environmentIntensity = 0.95;
   const camera = new THREE.PerspectiveCamera(27, 1, 0.1, 40);
   camera.position.set(0, 0.1, 8.5);
   camera.lookAt(0, -0.05, 0);
 
-  const key = new THREE.DirectionalLight(0xfff1e8, 1.4); key.position.set(2.4, 3.4, 4.5); scene.add(key);
-  const rim = new THREE.PointLight(0x5cc4ff, 40, 0, 2); rim.position.set(-3.4, 2.2, -2.4); scene.add(rim);
-  const rose = new THREE.PointLight(0xff6aa6, 18, 0, 2); rose.position.set(3.4, -1.0, 2.6); scene.add(rose);
+  const key = new THREE.DirectionalLight(0xffffff, 1.6); key.position.set(2.4, 3.4, 4.5); scene.add(key);
+  const rim = new THREE.PointLight(0x9ad8ff, 16, 0, 2); rim.position.set(-3.4, 2.2, -2.4); scene.add(rim);
+  const rose = new THREE.PointLight(0xffb0cf, 8, 0, 2); rose.position.set(3.4, -1.0, 2.6); scene.add(rose);
 
   const rig = new THREE.Group(); scene.add(rig);
   const tmp = new THREE.Vector3();
   const rnd = rng(20261117);
 
-  /* her: the sculpted bust */
-  const U = {
-    uDQ: { value: new THREE.Matrix4() }, uDQi: { value: new THREE.Matrix4() }, uHeadRot: { value: new THREE.Matrix3() },
-    uPivot: { value: NECK_PIVOT }, uEyeR: { value: EYE_R }, uEyeL: { value: EYE_L }, uGlow: { value: 0 }
-  };
-  let bust = null, morph = null, iR = -1, iL = -1, appear = 0;
+  /* her: the sculpted bust, shown exactly as modelled */
+  let bust = null, appear = 0;
   const holder = new THREE.Group();
   holder.scale.setScalar(MODEL_SCALE); holder.position.set(-0.0175 * MODEL_SCALE, -0.5 * MODEL_SCALE, 0);
   rig.add(holder);
   const loader = new GLTFLoader(); loader.setMeshoptDecoder(MeshoptDecoder);
   loader.load(new URL('./assets/xenia.glb', import.meta.url).href, gltf => {
-    gltf.scene.updateMatrixWorld(true);
-    gltf.scene.traverse(o => {
-      if (!o.isMesh) return;
-      bust = o; o.frustumCulled = false;
-      U.uDQ.value.copy(o.matrixWorld); U.uDQi.value.copy(o.matrixWorld).invert();
-      if (o.morphTargetDictionary) { iR = o.morphTargetDictionary.blinkR ?? -1; iL = o.morphTargetDictionary.blinkL ?? -1; morph = o.morphTargetInfluences; }
-      const m = o.material;
-      m.envMapIntensity = 1;
-      m.onBeforeCompile = sh => {
-        Object.assign(sh.uniforms, U);
-        sh.vertexShader = sh.vertexShader
-          .replace('#include <common>', `#include <common>
-uniform mat4 uDQ; uniform mat4 uDQi; uniform mat3 uHeadRot; uniform vec3 uPivot; varying vec3 vMPos;
-float headW(vec3 pm) {
-  float hy = smoothstep(0.25, 0.43, pm.y);
-  float rr = length(pm.xz - uPivot.xz);
-  return hy * (1.0 - smoothstep(0.17, 0.30, rr) * (1.0 - smoothstep(0.40, 0.54, pm.y)));
-}`)
-          .replace('#include <beginnormal_vertex>', `#include <beginnormal_vertex>
-{ vec3 pmN = (uDQ * vec4(position, 1.0)).xyz; objectNormal = normalize(mix(objectNormal, uHeadRot * objectNormal, headW(pmN))); }`)
-          .replace('#include <morphtarget_vertex>', `#include <morphtarget_vertex>
-{ vec3 pm0 = (uDQ * vec4(position, 1.0)).xyz; vMPos = pm0; float hw = headW(pm0);
-  vec3 q = (uDQ * vec4(transformed, 1.0)).xyz - uPivot; q = mix(q, uHeadRot * q, hw);
-  transformed = (uDQi * vec4(q + uPivot, 1.0)).xyz; }`);
-        sh.fragmentShader = sh.fragmentShader
-          .replace('#include <common>', `#include <common>
-uniform vec3 uEyeR; uniform vec3 uEyeL; uniform float uGlow; varying vec3 vMPos;`)
-          .replace('#include <emissivemap_fragment>', `#include <emissivemap_fragment>
-{ float eg = (1.0 - smoothstep(0.018, 0.05, distance(vMPos, uEyeR))) + (1.0 - smoothstep(0.018, 0.05, distance(vMPos, uEyeL)));
-  float blue = smoothstep(0.04, 0.3, diffuseColor.b - diffuseColor.r);
-  totalEmissiveRadiance += diffuseColor.rgb * eg * blue * uGlow; }`);
-      };
-    });
+    gltf.scene.traverse(o => { if (o.isMesh) { bust = o; o.frustumCulled = false; } });
     holder.add(gltf.scene);
   }, undefined, err => console.warn('Model failed to load', err));
 
@@ -213,74 +173,36 @@ uniform mat4 uDQ; uniform mat4 uDQi; uniform vec3 uHead; uniform float uHeadH; u
   resize();
 
   /* behaviour */
-  let gx = 0, gy = 0, time = 0, blinkT = 0, nextBlink = 3, winkT = 0, nod = 0, burst = false;
-  const head = { p: 0.16, y: 0.12, r: 0.05 };
-  const euler = new THREE.Euler(0, 0, 0, 'YXZ'), m4 = new THREE.Matrix4(), qLean = new THREE.Quaternion();
+  let gx = 0, gy = 0, time = 0, burst = false;
+  const qLean = new THREE.Quaternion();
 
-  // A quick press: flowers toggle open or shut and shed petals; her face answers with a wink.
-  function tap(x, y, unlocked) {
-    let best = null, bd = 0.14;
+  // A quick press on a flower opens or closes it and shakes petals loose.
+  function tap(x, y) {
+    let best = null, bd = 0.16;
     for (const f of flowers) { const d = Math.hypot(f.ndc.x - x, f.ndc.y - y); if (d < bd) { bd = d; best = f; } }
-    if (best) {
-      best.user = best.o > 0.5 ? 0 : 1; best.bounce = 1;
-      shed(best, best.user === 1 ? 6 : 3);
-      return 'flower';
-    }
-    tmp.copy(FACE); holder.localToWorld(tmp); tmp.project(camera);
-    if (unlocked && Math.hypot(tmp.x - x, tmp.y - y) < 0.3) { winkT = 0.45; nod = 1; return 'face'; }
-    return null;
+    if (!best) return null;
+    best.user = best.o > 0.5 ? 0 : 1; best.bounce = 1;
+    shed(best, best.user === 1 ? 6 : 3);
+    return 'flower';
   }
 
   function render(S, P, dt, unlocked) {
     resize();
     time += dt;
-    const locked = !unlocked, h = S.heat, awake = smooth(clamp(h * 1.15));
-    const listen = S.listen || 0, drag = P.drag || 0;
+    const locked = !unlocked, h = S.heat, drag = P.drag || 0, idle = reduced ? 0 : 1;
     let tx = 0, ty = 0;
     if (P.active) { tx = P.x; ty = P.y; }
-    else if (!reduced) { tx = Math.sin(time * 0.4) * 0.3; ty = Math.cos(time * 0.31) * 0.15; }
+    else if (idle) { tx = Math.sin(time * 0.4) * 0.3; ty = Math.cos(time * 0.31) * 0.15; }
     gx += (tx - gx) * Math.min(1, dt * 4); gy += (ty - gy) * Math.min(1, dt * 4);
-    nod *= Math.exp(-dt * 3);
-    const idle = reduced ? 0 : 1;
 
-    // head: bowed and turned aside while asleep, stirring while you type, following you when awake
-    const stir = listen * (1 - awake);
-    const tp = lerp(0.17 - 0.1 * stir, -gy * 0.11 + nod * 0.09, awake) + idle * Math.sin(time * 0.7) * 0.012;
-    const tyaw = lerp(0.14 - 0.1 * stir, gx * 0.17, awake) - S.recoil * 0.3;
-    const tr = lerp(0.05 + stir * 0.06 * Math.sin(time * 5), -gx * 0.05 + nod * 0.07, awake) + idle * Math.sin(time * 0.45) * 0.012;
-    const k = reduced ? 1 : Math.min(1, dt * 5);
-    head.p += (tp - head.p) * k; head.y += (tyaw - head.y) * k; head.r += (tr - head.r) * k;
-    euler.set(head.p, head.y, head.r);
-    U.uHeadRot.value.setFromMatrix4(m4.makeRotationFromEuler(euler));
-
-    rig.rotation.y = gx * 0.14 * awake + drag - S.recoil * 0.18;
-    rig.rotation.x = -gy * 0.04 * awake;
-    rig.position.y = idle * Math.sin(time * 0.6) * 0.025;
-    const breath = 1 + idle * Math.sin(time * 1.1) * 0.004;
+    // she is never reshaped: the whole bust turns gently toward you, or with your drag
+    rig.rotation.y = gx * 0.2 + drag - S.recoil * 0.12;
+    rig.rotation.x = -gy * 0.06;
+    rig.position.y = idle * Math.sin(time * 0.6) * 0.03;
     appear = Math.min(1, appear + (bust ? dt * 1.2 : 0));
-    holder.scale.setScalar(MODEL_SCALE * breath * lerp(0.94, 1, smooth(appear)));
+    holder.scale.setScalar(MODEL_SCALE * lerp(0.94, 1, smooth(appear)));
     holder.visible = !!bust;
 
-    // eyes: closed asleep, fluttering as she stirs, blinking and winking awake
-    if (!reduced && unlocked) {
-      nextBlink -= dt;
-      if (nextBlink < 0) { nextBlink = 2.6 + Math.random() * 4.5; blinkT = 0.2; }
-    }
-    blinkT = Math.max(0, blinkT - dt); winkT = Math.max(0, winkT - dt);
-    const bl = Math.sin(clamp(blinkT / 0.2) * Math.PI);
-    const flutter = stir * (0.12 + 0.1 * Math.sin(time * 9));
-    const base = clamp(1 - awake - flutter + S.recoil * 0.4 * awake);
-    if (morph) {
-      if (iR >= 0) morph[iR] = clamp(Math.max(base, bl));
-      if (iL >= 0) morph[iL] = clamp(Math.max(base, bl, Math.sin(clamp(winkT / 0.45) * Math.PI)));
-    }
-    U.uGlow.value = awake * (0.5 + 0.25 * S.open + (idle ? 0.08 * Math.sin(time * 2) : 0));
-
-    // light: cool and dim asleep, warm awake
-    renderer.toneMappingExposure = lerp(0.66, 1.18, awake) + 0.06 * stir;
-    key.intensity = lerp(1.0, 2.0, awake); rose.intensity = lerp(8, 22, awake);
-
-    // flowers
     if (S.open < 0.02) burst = false;
     const doBurst = !burst && S.open > 0.95; if (doBurst) burst = true;
     for (const f of flowers) {

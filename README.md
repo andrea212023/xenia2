@@ -2,7 +2,7 @@
 
 A friend from elsewhere keeps your message.
 
-A secret message card guarded by Xenia, a 3D alien friend among her flowers, rendered live in the browser with WebGL. She sleeps until the receiver answers her question. Then she wakes and follows you, and the flowers bloom one by one while the message resolves out of an invented script.
+A secret message card guarded by Xenia, a 3D alien friend among her flowers, rendered live in the browser with WebGL. Her flowers stay closed until the receiver answers her question. Then they bloom one by one while the message resolves out of an invented script.
 
 ## How it works
 
@@ -25,19 +25,16 @@ The app is `index.html`, `app.js` (cards, encryption, languages) and `scene.js` 
 
 Xenia and her flowers are 3D models by Andrianna-Mariia Kis, generated with Tripo from her own prompts. They were finished in Blender for the web:
 
-- `assets/xenia.glb`: the bust, reduced from about 2 million to 276,000 triangles, turned to face the viewer, with two added blink shapes (`blinkR`, `blinkL`).
+- `assets/xenia.glb`: the bust, lightened from about 2 million to 788,000 triangles and turned to face the viewer. Her shape and textures are otherwise untouched.
 - `assets/flora.glb`: ten flowers, split out of one sculpture into separate models of 9,000 triangles each.
 
-Both files are compressed with meshopt. Head movement, eye glow and the opening of the flowers are small shader additions in `scene.js`.
+Both files are compressed with meshopt. The opening and closing of the flowers is a small shader addition in `scene.js`.
 
-## What she does
+## What happens
 
-- Sleeps with closed eyes and a bowed head until the right answer.
-- Stirs while you type, and turns away from a wrong answer.
-- Wakes, opens her eyes, follows your cursor or finger, blinks.
-- Winks and nods when you tap her face.
-- Turns when you drag sideways.
-- Her flowers open one by one while you press and hold, lean toward your finger, open or close when tapped, and shed petals.
+- The flowers stay closed until the right answer, and shrink back from a wrong one.
+- They open one by one while you press and hold, lean toward your finger, open or close when tapped, and shed petals.
+- Xenia turns gently toward your cursor or finger, and turns further when you drag sideways.
 
 ## Third-party code
 

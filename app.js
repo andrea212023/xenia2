@@ -10,8 +10,8 @@ import { createScene } from './scene.js';
   const L = {
     en: {
       tagline: "A friend from elsewhere keeps your message.",
-      s_closed: "She is asleep. The flowers flinch when you reach for them.",
-      s_flinch: "They flinch. She wakes for an answer, never for force.",
+      s_closed: "The flowers are closed. They open for the right answer.",
+      s_flinch: "The flowers stay shut. Only an answer opens them, never force.",
       s_unknown: "She does not know you yet.",
       s_known: "She knows you. Press and hold, and stay while the flowers open.",
       s_open: "Everything is open. This was written for you.",
@@ -27,7 +27,7 @@ import { createScene } from './scene.js';
       plant_err: "This does not look like a whole seed. Copy all of it, starting with XEN1, and paste again.",
       msg: "Your message", msg_ph: "Write what only they should read.",
       q: "The question she will ask", q_s: "Something only your person can answer.", q_ph: "What did we name the pigeon?",
-      a: "The answer that wakes her", a_s: "This becomes the key. A longer, stranger answer is harder to guess.",
+      a: "The answer that opens the flowers", a_s: "This becomes the key. A longer, stranger answer is harder to guess.",
       seal: "Seal the card",
       note: "The message is encrypted in your browser with the answer. Without the answer nobody can read it, and neither can this page.",
       seal_err: "Sealing failed in this browser. Try a current version of Chrome, Safari or Firefox.",
@@ -42,8 +42,8 @@ import { createScene } from './scene.js';
     },
     uk: {
       tagline: "Подруга з іншого світу береже твоє послання.",
-      s_closed: "Вона спить. Квіти здригаються, коли до них тягнешся.",
-      s_flinch: "Вони здригаються. Її будить відповідь, а не сила.",
+      s_closed: "Квіти закриті. Вони розкриються на правильну відповідь.",
+      s_flinch: "Квіти не розкриваються. Їх відкриває лише відповідь, а не сила.",
       s_unknown: "Вона тебе ще не впізнає.",
       s_known: "Вона тебе впізнала. Натисни й тримай, залишайся, доки квіти розкриваються.",
       s_open: "Усе розкрилося. Це написано для тебе.",
@@ -59,7 +59,7 @@ import { createScene } from './scene.js';
       plant_err: "Це не схоже на цілу насінину. Скопіюй її повністю, починаючи з XEN1, і встав ще раз.",
       msg: "Твоє послання", msg_ph: "Напиши те, що має прочитати лише одна людина.",
       q: "Запитання, яке вона поставить", q_s: "Щось, на що може відповісти лише твоя людина.", q_ph: "Як ми назвали того голуба?",
-      a: "Відповідь, яка її розбудить", a_s: "Вона стане ключем. Довшу й дивнішу відповідь важче вгадати.",
+      a: "Відповідь, яка розкриє квіти", a_s: "Вона стане ключем. Довшу й дивнішу відповідь важче вгадати.",
       seal: "Запечатати листівку",
       note: "Послання шифрується у твоєму браузері за допомогою відповіді. Без відповіді його не прочитає ніхто, навіть ця сторінка.",
       seal_err: "Не вдалося запечатати в цьому браузері. Спробуй актуальну версію Chrome, Safari або Firefox.",
@@ -74,8 +74,8 @@ import { createScene } from './scene.js';
     },
     de: {
       tagline: "Eine Freundin von anderswo hütet deine Nachricht.",
-      s_closed: "Sie schläft. Die Blumen zucken zurück, wenn du nach ihnen greifst.",
-      s_flinch: "Sie zucken zurück. Eine Antwort weckt sie, niemals Gewalt.",
+      s_closed: "Die Blumen sind geschlossen. Sie öffnen sich für die richtige Antwort.",
+      s_flinch: "Die Blumen bleiben zu. Nur eine Antwort öffnet sie, niemals Gewalt.",
       s_unknown: "Sie erkennt dich noch nicht.",
       s_known: "Sie erkennt dich. Drücke und halte, und bleib, während die Blumen sich öffnen.",
       s_open: "Alles ist offen. Das wurde für dich geschrieben.",
@@ -91,7 +91,7 @@ import { createScene } from './scene.js';
       plant_err: "Das sieht nicht nach einem ganzen Samen aus. Kopiere ihn vollständig, beginnend mit XEN1, und füge ihn erneut ein.",
       msg: "Deine Nachricht", msg_ph: "Schreib, was nur eine Person lesen soll.",
       q: "Die Frage, die sie stellen wird", q_s: "Etwas, das nur dein Mensch beantworten kann.", q_ph: "Wie haben wir die Taube genannt?",
-      a: "Die Antwort, die sie weckt", a_s: "Sie wird zum Schlüssel. Eine längere, seltsamere Antwort ist schwerer zu erraten.",
+      a: "Die Antwort, die die Blumen öffnet", a_s: "Sie wird zum Schlüssel. Eine längere, seltsamere Antwort ist schwerer zu erraten.",
       seal: "Karte versiegeln",
       note: "Die Nachricht wird in deinem Browser mit der Antwort verschlüsselt. Ohne die Antwort kann niemand sie lesen, auch diese Seite nicht.",
       seal_err: "Das Versiegeln ist in diesem Browser fehlgeschlagen. Versuche eine aktuelle Version von Chrome, Safari oder Firefox.",
@@ -106,8 +106,8 @@ import { createScene } from './scene.js';
     },
     pl: {
       tagline: "Przyjaciółka z innego świata strzeże twojej wiadomości.",
-      s_closed: "Ona śpi. Kwiaty cofają się, gdy po nie sięgasz.",
-      s_flinch: "Cofają się. Budzi ją odpowiedź, nigdy siła.",
+      s_closed: "Kwiaty są zamknięte. Otworzą się na właściwą odpowiedź.",
+      s_flinch: "Kwiaty pozostają zamknięte. Otwiera je tylko odpowiedź, nigdy siła.",
       s_unknown: "Jeszcze cię nie poznaje.",
       s_known: "Poznała cię. Naciśnij i przytrzymaj, zostań, aż kwiaty się otworzą.",
       s_open: "Wszystko się otworzyło. To zostało napisane dla ciebie.",
@@ -123,7 +123,7 @@ import { createScene } from './scene.js';
       plant_err: "To nie wygląda na całe nasiono. Skopiuj je w całości, zaczynając od XEN1, i wklej ponownie.",
       msg: "Twoja wiadomość", msg_ph: "Napisz to, co ma przeczytać tylko jedna osoba.",
       q: "Pytanie, które ona zada", q_s: "Coś, na co odpowie tylko twoja osoba.", q_ph: "Jak nazwaliśmy tego gołębia?",
-      a: "Odpowiedź, która ją obudzi", a_s: "Stanie się kluczem. Dłuższą i dziwniejszą odpowiedź trudniej zgadnąć.",
+      a: "Odpowiedź, która otworzy kwiaty", a_s: "Stanie się kluczem. Dłuższą i dziwniejszą odpowiedź trudniej zgadnąć.",
       seal: "Zapieczętuj kartkę",
       note: "Wiadomość jest szyfrowana w twojej przeglądarce za pomocą odpowiedzi. Bez odpowiedzi nikt jej nie przeczyta, ta strona również.",
       seal_err: "Nie udało się zapieczętować w tej przeglądarce. Spróbuj aktualnej wersji Chrome, Safari lub Firefoksa.",
@@ -138,8 +138,8 @@ import { createScene } from './scene.js';
     },
     nl: {
       tagline: "Een vriendin van elders bewaart je bericht.",
-      s_closed: "Ze slaapt. De bloemen deinzen terug als je naar ze reikt.",
-      s_flinch: "Ze deinzen terug. Een antwoord wekt haar, dwang nooit.",
+      s_closed: "De bloemen zijn dicht. Ze gaan open voor het juiste antwoord.",
+      s_flinch: "De bloemen blijven dicht. Alleen een antwoord opent ze, dwang nooit.",
       s_unknown: "Ze herkent je nog niet.",
       s_known: "Ze herkent je. Houd ingedrukt en blijf terwijl de bloemen opengaan.",
       s_open: "Alles is open. Dit is voor jou geschreven.",
@@ -155,7 +155,7 @@ import { createScene } from './scene.js';
       plant_err: "Dit lijkt geen volledig zaadje. Kopieer het helemaal, vanaf XEN1, en plak het opnieuw.",
       msg: "Jouw bericht", msg_ph: "Schrijf wat maar één persoon mag lezen.",
       q: "De vraag die ze zal stellen", q_s: "Iets wat alleen jouw persoon kan beantwoorden.", q_ph: "Hoe noemden we die duif?",
-      a: "Het antwoord dat haar wekt", a_s: "Dit wordt de sleutel. Een langer, vreemder antwoord is moeilijker te raden.",
+      a: "Het antwoord dat de bloemen opent", a_s: "Dit wordt de sleutel. Een langer, vreemder antwoord is moeilijker te raden.",
       seal: "Kaart verzegelen",
       note: "Het bericht wordt in je browser versleuteld met het antwoord. Zonder het antwoord kan niemand het lezen, ook deze pagina niet.",
       seal_err: "Verzegelen is mislukt in deze browser. Probeer een recente versie van Chrome, Safari of Firefox.",
@@ -170,8 +170,8 @@ import { createScene } from './scene.js';
     },
     es: {
       tagline: "Una amiga de otro mundo guarda tu mensaje.",
-      s_closed: "Está dormida. Las flores se encogen cuando intentas tocarlas.",
-      s_flinch: "Se encogen. La despierta una respuesta, nunca la fuerza.",
+      s_closed: "Las flores están cerradas. Se abren con la respuesta correcta.",
+      s_flinch: "Las flores siguen cerradas. Solo una respuesta las abre, nunca la fuerza.",
       s_unknown: "Todavía no te reconoce.",
       s_known: "Te reconoce. Mantén pulsado y quédate mientras las flores se abren.",
       s_open: "Todo está abierto. Esto fue escrito para ti.",
@@ -187,7 +187,7 @@ import { createScene } from './scene.js';
       plant_err: "Esto no parece una semilla completa. Cópiala entera, empezando por XEN1, y pégala otra vez.",
       msg: "Tu mensaje", msg_ph: "Escribe lo que solo una persona debe leer.",
       q: "La pregunta que ella hará", q_s: "Algo que solo tu persona puede responder.", q_ph: "¿Cómo llamamos a aquella paloma?",
-      a: "La respuesta que la despierta", a_s: "Se convierte en la llave. Una respuesta más larga y más rara es más difícil de adivinar.",
+      a: "La respuesta que abre las flores", a_s: "Se convierte en la llave. Una respuesta más larga y más rara es más difícil de adivinar.",
       seal: "Sellar la tarjeta",
       note: "El mensaje se cifra en tu navegador con la respuesta. Sin la respuesta nadie puede leerlo, tampoco esta página.",
       seal_err: "No se pudo sellar en este navegador. Prueba una versión actual de Chrome, Safari o Firefox.",
@@ -202,8 +202,8 @@ import { createScene } from './scene.js';
     },
     pt: {
       tagline: "Uma amiga de outro mundo guarda a tua mensagem.",
-      s_closed: "Ela dorme. As flores encolhem-se quando tentas tocar-lhes.",
-      s_flinch: "Encolhem-se. Só uma resposta a acorda, nunca a força.",
+      s_closed: "As flores estão fechadas. Abrem-se com a resposta certa.",
+      s_flinch: "As flores continuam fechadas. Só uma resposta as abre, nunca a força.",
       s_unknown: "Ela ainda não te reconhece.",
       s_known: "Ela reconhece-te. Prime e mantém, e fica enquanto as flores se abrem.",
       s_open: "Tudo está aberto. Isto foi escrito para ti.",
@@ -219,7 +219,7 @@ import { createScene } from './scene.js';
       plant_err: "Isto não parece uma semente completa. Copia-a toda, a começar por XEN1, e cola outra vez.",
       msg: "A tua mensagem", msg_ph: "Escreve o que só uma pessoa deve ler.",
       q: "A pergunta que ela fará", q_s: "Algo a que só a tua pessoa sabe responder.", q_ph: "Que nome demos àquele pombo?",
-      a: "A resposta que a acorda", a_s: "Torna-se a chave. Uma resposta mais longa e mais estranha é mais difícil de adivinhar.",
+      a: "A resposta que abre as flores", a_s: "Torna-se a chave. Uma resposta mais longa e mais estranha é mais difícil de adivinhar.",
       seal: "Selar o cartão",
       note: "A mensagem é cifrada no teu navegador com a resposta. Sem a resposta ninguém a consegue ler, nem esta página.",
       seal_err: "Não foi possível selar neste navegador. Experimenta uma versão atual do Chrome, Safari ou Firefox.",
@@ -234,8 +234,8 @@ import { createScene } from './scene.js';
     },
     fr: {
       tagline: "Une amie venue d'ailleurs garde ton message.",
-      s_closed: "Elle dort. Les fleurs se rétractent quand tu tends la main.",
-      s_flinch: "Elles se rétractent. Seule une réponse la réveille, jamais la force.",
+      s_closed: "Les fleurs sont fermées. Elles s'ouvrent pour la bonne réponse.",
+      s_flinch: "Les fleurs restent fermées. Seule une réponse les ouvre, jamais la force.",
       s_unknown: "Elle ne te reconnaît pas encore.",
       s_known: "Elle te reconnaît. Appuie et maintiens, reste pendant que les fleurs s'ouvrent.",
       s_open: "Tout est ouvert. Ceci a été écrit pour toi.",
@@ -251,7 +251,7 @@ import { createScene } from './scene.js';
       plant_err: "Cela ne ressemble pas à une graine entière. Copie-la en entier, à partir de XEN1, et colle-la de nouveau.",
       msg: "Ton message", msg_ph: "Écris ce qu'une seule personne doit lire.",
       q: "La question qu'elle posera", q_s: "Quelque chose que seule ta personne peut savoir.", q_ph: "Quel nom avons-nous donné au pigeon ?",
-      a: "La réponse qui la réveille", a_s: "Elle devient la clé. Une réponse plus longue et plus étrange est plus difficile à deviner.",
+      a: "La réponse qui ouvre les fleurs", a_s: "Elle devient la clé. Une réponse plus longue et plus étrange est plus difficile à deviner.",
       seal: "Sceller la carte",
       note: "Le message est chiffré dans ton navigateur avec la réponse. Sans la réponse, personne ne peut le lire, pas même cette page.",
       seal_err: "Le scellement a échoué dans ce navigateur. Essaie une version récente de Chrome, Safari ou Firefox.",
@@ -439,7 +439,7 @@ import { createScene } from './scene.js';
     const quick = P.down && performance.now() - downAt < 280 && moved < 0.05;
     P.down = false;
     let hit = null;
-    if (quick && scene3d) hit = scene3d.tap(downX, downY, unlocked);
+    if (quick && scene3d) hit = scene3d.tap(downX, downY);
     if (!unlocked && !hit && quick) say('status', 's_flinch');
     if (e.pointerType !== 'mouse') P.active = false;
   };
