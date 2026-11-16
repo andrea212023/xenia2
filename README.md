@@ -25,16 +25,16 @@ The app is `index.html`, `app.js` (cards, encryption, languages) and `scene.js` 
 
 Xenia and her flowers are 3D models by Andrianna-Mariia Kis, generated with Tripo from her own prompts. They were finished in Blender for the web:
 
-- `assets/xenia.glb`: the bust, lightened from about 2 million to 788,000 triangles and turned to face the viewer. Her shape and textures are otherwise untouched.
-- `assets/flora.glb`: ten flowers, split out of one sculpture into separate models of 9,000 triangles each.
-
-Both files are compressed with meshopt. The opening and closing of the flowers is a small shader addition in `scene.js`.
+- `assets/xenia.glb`: the original bust with all of its roughly 2 million triangles, only compressed with meshopt (15.5 MB). She is turned to face the viewer in code.
+- `assets/xenia-lite.glb`: a lighter copy (788,000 triangles, 8.6 MB) that phones load instead. Add `?full` to the address to force the original, or `?lite` to force the light one.
+- `assets/flora.glb`: ten flowers, split out of one sculpture in Blender into separate models of 9,000 triangles each.
 
 ## What happens
 
+- Her eyes follow your cursor or finger: the irises slide inside the eye openings, and the bust turns gently with them. Drag sideways to turn her further.
 - The flowers stay closed until the right answer, and shrink back from a wrong one.
-- They open one by one while you press and hold, lean toward your finger, open or close when tapped, and shed petals.
-- Xenia turns gently toward your cursor or finger, and turns further when you drag sideways.
+- They open one by one while you press and hold, lean toward your finger, open or close when tapped, light up, and shed petals.
+- Iridescent dust drifts through the scene, a soft aura glows behind her, and her eyes and the open flowers bloom with light.
 
 ## Third-party code
 
