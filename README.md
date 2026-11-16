@@ -2,7 +2,7 @@
 
 A friend from elsewhere keeps your message.
 
-A secret message card guarded by an alien face in a crown of flowers. She sleeps until the receiver answers her question. Then her eyes open and follow you, and the flowers bloom one by one while the message resolves out of an invented script.
+A secret message card guarded by a 3D alien face in a crown of flowers, rendered live in the browser with WebGL. She sleeps until the receiver answers her question. Then her eyes open and follow you, and the flowers bloom one by one while the message resolves out of an invented script.
 
 ## How it works
 
@@ -19,8 +19,12 @@ The message is encrypted in the browser with AES-GCM. The key is derived from th
 
 ## Run it
 
-The whole app is `index.html`. Serve it over HTTPS or on localhost (browsers only allow the encryption API in a secure context), or publish the repository with GitHub Pages.
+The app is `index.html`, `app.js` (cards, encryption, languages) and `scene.js` (the 3D scene). Serve it over HTTPS or on localhost (browsers only allow the encryption API in a secure context), or publish the repository with GitHub Pages.
 
 ## Artwork
 
-The face and all flowers are drawn procedurally on a canvas. No image files are used.
+The head, the flowers, their textures and materials are all generated in code in `scene.js`. No image or model files are used.
+
+## Third-party code
+
+`vendor/` contains [three.js](https://threejs.org) r170 and a few of its add-ons, under the MIT license (see `vendor/THREE-LICENSE`).
