@@ -2,6 +2,8 @@
 
 A friend from elsewhere keeps your message.
 
+**[Try it out](https://andrea212023.github.io/xenia2/)**
+
 A secret message card guarded by Xenia, a 3D alien friend among her flowers, rendered live in the browser with WebGL. Her flowers stay closed until the receiver answers her question. Then they bloom one by one while the message resolves out of an invented script.
 
 ## How it works
