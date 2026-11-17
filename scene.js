@@ -86,6 +86,8 @@ export function createScene(canvas, reduced) {
     gltf.scene.traverse(o => {
       if (!o.isMesh) return;
       bust = o; o.frustumCulled = false;
+      const aniso = renderer.capabilities.getMaxAnisotropy();
+      for (const t of [o.material.map, o.material.normalMap, o.material.roughnessMap]) if (t) t.anisotropy = aniso;
       E.uDQ.value.copy(o.matrixWorld); E.uDQi.value.copy(o.matrixWorld).invert();
       o.material.onBeforeCompile = sh => {
         Object.assign(sh.uniforms, E);

@@ -25,8 +25,8 @@ The app is `index.html`, `app.js` (cards, encryption, languages) and `scene.js` 
 
 Xenia and her flowers are 3D models by Andrianna-Mariia Kis, generated with Tripo from her own prompts. They were finished in Blender for the web:
 
-- `assets/xenia.glb`: the original bust with all of its roughly 2 million triangles, only compressed with meshopt (15.5 MB). She is turned to face the viewer in code.
-- `assets/xenia-lite.glb`: a lighter copy (788,000 triangles, 8.6 MB) that phones load instead. Add `?full` to the address to force the original, or `?lite` to force the light one.
+- `assets/xenia.glb`: the original bust with all of its roughly 2 million triangles, with her 4K colour and detail textures, only compressed with meshopt (24 MB). She is turned to face the viewer in code.
+- `assets/xenia-lite.glb`: a lighter copy (788,000 triangles, 2K textures, 11 MB) that phones load instead. Add `?full` to the address to force the original, or `?lite` to force the light one.
 - `assets/flora.glb`: ten flowers, split out of one sculpture in Blender into separate models of 9,000 triangles each.
 
 ## What happens
